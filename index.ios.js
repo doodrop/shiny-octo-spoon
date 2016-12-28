@@ -4,50 +4,33 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import React from 'react';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { AppRegistry } from 'react-native';
+import { Actions, Scene, Router } from 'react-native-router-flux';
+import Signup from './app/components/Signup';
+// import reducers from './app/reducers/index';
 
-export default class dooDrop extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+const loggerMiddleware = createLogger();
+const store = createStore(() => true, applyMiddleware(
+  thunkMiddleware,
+  loggerMiddleware
+));
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+const scenes = Actions.create(
+  <Scene key="root">
+    <Scene key="signup" component={Signup} hideNavBar initial />
+  </Scene>
+);
+
+
+const dooDrop = () => (
+    <Provider store={store}>
+      <Router scenes={scenes} />
+    </Provider>
+);
 
 AppRegistry.registerComponent('dooDrop', () => dooDrop);

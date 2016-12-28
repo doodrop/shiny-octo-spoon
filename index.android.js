@@ -10,8 +10,8 @@ import createLogger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { AppRegistry } from 'react-native';
-import { Actions, Scene, Router, ActionConst } from 'react-native-router-flux';
-import Hello from './app/components/Hello';
+import { Actions, Scene, Router } from 'react-native-router-flux';
+import Signup from './app/components/Signup';
 // import reducers from './app/reducers/index';
 
 const loggerMiddleware = createLogger();
@@ -22,7 +22,7 @@ const store = createStore(() => true, applyMiddleware(
 
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene key="hello" component={Hello} hideNavBar initial />
+    <Scene key="signup" component={Signup} hideNavBar initial />
   </Scene>
 );
 
