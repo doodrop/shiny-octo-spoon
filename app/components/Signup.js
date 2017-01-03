@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AwesomeButton from 'react-native-awesome-button';
+import { Actions } from 'react-native-router-flux';
 
 const styles = StyleSheet.create({
 	container: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 		fontSize: 25,
 	},
 	signupOptions: {
-		flex: 1,
+		flex: 3,
 		flexDirection: 'row',
 		margin: 25,
 	},
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 	},
 	bottomOption: {
-		flex: 1,
+		bottom: 25,
 		flexDirection: 'row',
 	},
 	alreadyAccountText: {
@@ -71,7 +72,7 @@ const Signup = () => (
         </View>
         <View style={styles.bottomOption}>
             <Text style={styles.alreadyAccountText}>Already have an account? </Text>
-            <Text style={styles.bottomLoginText}>Login</Text>
+            <Text style={styles.bottomLoginText} onPress={() => Actions.signin()}>Login</Text>
         </View>
 	</View>
 );
