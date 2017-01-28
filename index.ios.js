@@ -12,18 +12,18 @@ import { createStore, applyMiddleware } from 'redux';
 import { AppRegistry } from 'react-native';
 import { Actions, Scene, Router } from 'react-native-router-flux';
 import Signup from './app/components/Signup';
-import Signin from './app/components/Signin';
-// import reducers from './app/reducers/index';
+import SigninContainer from './app/containers/signin-container';
+import reducers from './app/reducers/index';
 
 const loggerMiddleware = createLogger();
-const store = createStore(() => true, applyMiddleware(
+const store = createStore(reducers, applyMiddleware(
   thunkMiddleware,
   loggerMiddleware
 ));
 
 const scenes = Actions.create(
   <Scene key="root">
-	<Scene key="signin" component={Signin} hideNavBar initial />
+	<Scene key="signin" component={SigninContainer} hideNavBar initial />
     <Scene key="signup" component={Signup} hideNavBar />
   </Scene>
 );
