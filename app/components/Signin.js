@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, Image, StyleSheet } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { View, Text, TextInput, Image, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import AwesomeButton from 'react-native-awesome-button';
 import { Actions } from 'react-native-router-flux';
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	forgotPasswordContainer: {
-		flex: 3,
+		flex: 2,
 	},
 	forgotPasswordText: {
 		fontSize: 15,
@@ -76,6 +76,11 @@ const styles = StyleSheet.create({
 		color: '#ffffff',
 		fontWeight: 'bold',
 	},
+	centering: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'transparent',
+	},
 });
 
 class Signin extends Component {
@@ -86,7 +91,42 @@ class Signin extends Component {
 			password: '',
 		};
 	}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.successLogin === false && nextProps.apiError !== '') {
+			this.showAlert(nextProps.apiError);
+		}
+	}
+	validateEmail = (email) => {
+		const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+	signinUser() {
+		const { signin } = this.props;
+		const user = {
+			email: this.state.email,
+			password: this.state.password,
+		};
+		if (!this.validateEmail(user.email) && !user.password.trim()) {
+			this.showAlert('Invalid email and password');
+			return;
+		}
+		if (!this.validateEmail(user.email)) {
+			this.showAlert('Invalid email');
+			return;
+		}
+		if (!user.password.trim()) {
+			this.showAlert('Invalid password');
+			return;
+		}
+		signin(user);
+	}
+	showAlert(message) {
+		Alert.alert('Error', message, [{
+			text: 'Dismiss', onPress: () => true,
+		}]);
+	}
 	render() {
+		const { loading } = this.props;
 		return (
 			<View style={styles.container}>
 				<View style={styles.logo}>
@@ -131,7 +171,7 @@ class Signin extends Component {
 							states={{
 								'default': {
 									text: 'Sign In',
-									onPress: () => true,
+									onPress: () => this.signinUser(),
 									backgroundColor: '#fdc200',
 								},
 							}}
@@ -141,6 +181,8 @@ class Signin extends Component {
 						</View>
 					</View>
 				</View>
+				{ loading === true ?
+					<ActivityIndicator animating style={[styles.centering, { height: 100 }]} size="large" color={"#ffffff"} /> : null }
 				<View style={styles.bottomContainer}>
 					<Text style={styles.bottomText}>Don't have an account? </Text>
 					<Text style={styles.signupText} onPress={() => Actions.signup()}>Sign Up</Text>
@@ -149,5 +191,11 @@ class Signin extends Component {
 		);
 	}
 }
+
+Signin.propTypes = {
+	loading: PropTypes.bool.isRequired,
+	signin: PropTypes.func.isRequired,
+	apiError: PropTypes.string.isRequired,
+};
 
 export default Signin;
