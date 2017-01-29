@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 import Signin from '../components/Signin';
-import { signin } from '../reducers/signin/actions';
+import { signin } from '../reducers/auth/actions';
 
-const mapStateToProps = (state) => ({
-	...state.signin,
+const mapStateToProps = state => ({
+	signinError: state.auth.signinError,
+	loading: state.auth.loading,
+	successSignin: state.auth.successSignin,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
 	signin: (user) => {
 		dispatch(signin(user));
 	},

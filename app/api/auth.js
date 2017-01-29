@@ -10,6 +10,17 @@ const signin = user => (
 	})
 );
 
+const signup = user => (
+	fetch(`${baseUrl.backendUrl}/signup`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+		},
+		body: JSON.stringify(user),
+	})
+);
+
 export default {
 	signin,
+	signup,
 };
