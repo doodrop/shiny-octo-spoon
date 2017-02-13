@@ -92,8 +92,8 @@ class Signin extends Component {
 		};
 	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.successLogin === false && nextProps.apiError !== '') {
-			this.showAlert(nextProps.apiError);
+		if (nextProps.successSignin === false && nextProps.signinError !== '') {
+			this.showAlert(nextProps.signinError);
 		}
 	}
 	validateEmail = (email) => {
@@ -195,7 +195,7 @@ class Signin extends Component {
 Signin.propTypes = {
 	loading: PropTypes.bool.isRequired,
 	signin: PropTypes.func.isRequired,
-	apiError: PropTypes.string.isRequired,
+	signinError: PropTypes.string.isRequired,
 };
 
 export default Signin;
