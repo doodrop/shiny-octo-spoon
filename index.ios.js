@@ -13,6 +13,7 @@ import { AppRegistry } from 'react-native';
 import { Actions, Scene, Router } from 'react-native-router-flux';
 import SignupContainer from './app/containers/signup-container';
 import SigninContainer from './app/containers/signin-container';
+import Map from './app/components/Map';
 import reducers from './app/reducers/index';
 
 const loggerMiddleware = createLogger();
@@ -25,6 +26,7 @@ const scenes = Actions.create(
   <Scene key="root">
 	<Scene key="signin" component={SigninContainer} hideNavBar initial />
     <Scene key="signup" component={SignupContainer} hideNavBar />
+	<Scene key="map" component={Map} hideNavBar />
   </Scene>
 );
 

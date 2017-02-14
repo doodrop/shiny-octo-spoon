@@ -84,6 +84,8 @@ class Signup extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.successSignup === false && nextProps.signupError !== '') {
 			this.showAlert(nextProps.signupError);
+		} else {
+			Actions.map();
 		}
 	}
 	validateEmail = (email) => {
