@@ -92,10 +92,11 @@ class Signin extends Component {
 		};
 	}
 	componentWillReceiveProps(nextProps) {
+		if (nextProps.successSignin === true) {
+			Actions.map();
+		}
 		if (nextProps.successSignin === false && nextProps.signinError !== '') {
 			this.showAlert(nextProps.signinError);
-		} else {
-			Actions.map();
 		}
 	}
 	validateEmail = (email) => {

@@ -82,10 +82,11 @@ class Signup extends Component {
 		};
 	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.successSignup === false && nextProps.signupError !== '') {
-			this.showAlert(nextProps.signupError);
-		} else {
+		if (nextProps.successSignin === true) {
 			Actions.map();
+		}
+		if (nextProps.successSignin === false && nextProps.signinError !== '') {
+			this.showAlert(nextProps.signinError);
 		}
 	}
 	validateEmail = (email) => {

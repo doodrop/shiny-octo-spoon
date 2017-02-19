@@ -10,7 +10,7 @@ import createLogger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { AppRegistry } from 'react-native';
-import { Actions, Scene, Router } from 'react-native-router-flux';
+import { Actions, Scene, Router, ActionConst } from 'react-native-router-flux';
 import SignupContainer from './app/containers/signup-container';
 import SigninContainer from './app/containers/signin-container';
 import Map from './app/components/Map';
@@ -24,9 +24,9 @@ const store = createStore(reducers, applyMiddleware(
 
 const scenes = Actions.create(
   <Scene key="root">
-	<Scene key="signin" component={SigninContainer} hideNavBar initial />
+	<Scene key="signin" component={SigninContainer} hideNavBar initial type={ActionConst.RESET} />
     <Scene key="signup" component={SignupContainer} hideNavBar />
-	<Scene key="map" component={Map} hideNavBar />
+	<Scene key="map" component={Map} hideNavBar type={ActionConst.REPLACE} />
   </Scene>
 );
 
