@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 	},
 	welcomeText: {
 		color: '#ffffff',
-		fontSize: 25,
+		fontSize: 22,
 		alignSelf: 'center',
 	},
 	textboxContainer: {
@@ -132,7 +132,8 @@ class Signup extends Component {
 				</View>
 				<View style={styles.signupForm}>
 					<View style={styles.welcomeTextContainer}>
-						<Text style={styles.welcomeText}>Welcome to DooDrop</Text>
+						<Text style={styles.welcomeText}>Have Your Human</Text>
+						<Text style={styles.welcomeText}>Create An Account</Text>
 					</View>
 					<View style={styles.textboxContainer}>
 						<TextInput
