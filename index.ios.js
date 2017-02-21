@@ -24,9 +24,9 @@ const store = createStore(reducers, applyMiddleware(
 
 const scenes = Actions.create(
   <Scene key="root">
-	<Scene key="signin" component={SigninContainer} hideNavBar initial type={ActionConst.RESET} />
+	<Scene key="signin" component={SigninContainer} hideNavBar type={ActionConst.RESET} />
     <Scene key="signup" component={SignupContainer} hideNavBar />
-	<Scene key="map" component={Map} hideNavBar type={ActionConst.REPLACE} />
+	<Scene key="map" component={Map} hideNavBar initial type={ActionConst.REPLACE} />
   </Scene>
 );
 
