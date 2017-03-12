@@ -1,3 +1,3 @@
 export default {
-	backendUrl: 'http://localhost:3001',
+	backendUrl: 'http://localhost:3000',
 };
