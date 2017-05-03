@@ -92,6 +92,12 @@ const styles = StyleSheet.create({
 		borderBottomColor: 'transparent',
 		borderBottomWidth: 10,
 	},
+	locationOverlay: {
+		...StyleSheet.absoluteFillObject,
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingBottom: 52,
+	},
 });
 
 
@@ -102,13 +108,24 @@ class Map extends Component {
 			isPopoverVisible: false,
 			popoverWidth: new Animated.Value(0),
 			popoverHeight: new Animated.Value(0),
+			popoverMaxWidth: 200,
 		};
 
 		this._onContainerLayout = this._onContainerLayout.bind(this);
-		this.showPopover = this.showPopover.bind(this);
-		this.closePopover = this.closePopover.bind(this);
+		this.togglePopover = this.togglePopover.bind(this);
 	}
-	showPopover() {
+	componentDidMount() {
+		navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+			console.log('Coords', { latitude, longitude });
+			this.refs.map.animateToRegion({
+				latitude,
+				longitude,
+				latitudeDelta: 0.005,
+				longitudeDelta: 0.005,
+			});
+		});
+	}
+	togglePopover() {
 		if (this.state.isPopoverVisible) {
 			Animated.parallel([
 				Animated.timing(this.state.popoverHeight, { duration: 200, toValue: 30 }),
@@ -130,9 +147,6 @@ class Map extends Component {
 			]).start();
 		}
 	}
-	closePopover() {
-		this.setState({ isVisible: false });
-	}
 	_onContainerLayout({ nativeEvent: { layout: { width } } }) {
 		const popoverMaxWidth = width * 0.45;
 
@@ -146,6 +160,7 @@ class Map extends Component {
 				onLayout={this._onContainerLayout}
 			>
 				<MapView style={styles.map}
+					ref="map"
 					showsUserLocation
 					followsUserLocation
 					loadingEnabled
@@ -162,7 +177,7 @@ class Map extends Component {
 										resizeMode="contain"
 									/>
 									<View style={styles.popoverOptionText}>
-										<Text>Add Trash Can</Text>
+										<Text numberOfLines={1}>Add Trash Can</Text>
 									</View>
 								</View>
 							</TouchableOpacity>
@@ -174,7 +189,7 @@ class Map extends Component {
 										resizeMode="contain"
 									/>
 									<View style={styles.popoverOptionText}>
-										<Text>Add Water Bowl</Text>
+										<Text numberOfLines={1}>Add Water Bowl</Text>
 									</View>
 								</View>
 							</TouchableOpacity>
@@ -186,7 +201,7 @@ class Map extends Component {
 										resizeMode="contain"
 									/>
 									<View style={styles.popoverOptionText}>
-										<Text>Add Dog Park</Text>
+										<Text numberOfLines={1}>Add Dog Park</Text>
 									</View>
 								</View>
 							</TouchableOpacity>
@@ -198,7 +213,7 @@ class Map extends Component {
 					</Animated.View> : null
 				}
 				<View style={styles.mapnav}>
-					<TouchableOpacity onPress={this.showPopover}
+					<TouchableOpacity onPress={this.togglePopover}
 						activeOpacity={0.6}
 					>
 						<View style={styles.addIconContainer}>
@@ -208,7 +223,11 @@ class Map extends Component {
 					<View style={styles.pawIconContainer}>
 						<FontAwesomeIcon name="paw" size={30} color="#ffff" />
 					</View>
-				</View>
+				</View>{
+								// <View style={styles.locationOverlay}>
+								// 	<Image source={require('../static/images/dog-park-map-marker.png')} />
+								// </View>
+							}
 			</View>
 		);
 	}
